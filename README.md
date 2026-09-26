@@ -8,6 +8,30 @@
 這個 repo 是同一套邏輯改寫成的真正程式碼版本——可以獨立執行、可以放上 GitHub、
 別人（或未來的你）可以直接看懂邏輯、重新部署。
 
+## 流程圖
+
+```mermaid
+flowchart LR
+    A[GitHub Actions<br/>週一~週六 09:00 台北時間] --> B[sheet_reader<br/>讀 Google Sheet 收件人名單]
+    A --> C[news_fetcher<br/>抓 RSS 新聞候選]
+    A --> D[market_data<br/>抓黃金/台股/美債/道瓊]
+    C --> E[news_curator<br/>依規則篩選＋摘要<br/>選用 Claude API]
+    B --> F[email_renderer<br/>套模板＋外觀設定]
+    E --> F
+    D --> F
+    F --> G[mailer<br/>Gmail API 逐一寄送]
+    G --> H[(收件人信箱)]
+```
+
+## 範例輸出
+
+- 📄 完整範例內容（純文字＋HTML 截圖）：[`docs/sample-report.md`](docs/sample-report.md)
+- 📧 信件截圖：
+
+  ![晨報信件範例](docs/images/email-sample.png)
+
+  > 收件人姓名、新聞內容、市場數據皆為示範用虛構資料，實際格式與真實 HTML 樣板完全一致。
+
 ## 架構
 
 ```
